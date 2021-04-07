@@ -1,0 +1,51 @@
+﻿<Window x:Class="SensorData.TestManager.AddEditSensorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SensorData.TestManager"
+        mc:Ignorable="d"
+        Title="AddEditSensor" Height="370" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="5,0,5,0" />
+        </Style>
+        </Grid.Resources>
+    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <local:SensorControl Grid.Row="0" x:Name="ssc_NewSensor" />
+
+        <GroupBox Grid.Row="1">
+            <GroupBox.Header>
+                <CheckBox x:Name="ckb_AddTestParameter" Content="Assign Test Parameter" Checked="ckb_AddTestParameter_Checked" Unchecked="ckb_AddTestParameter_Checked"/>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <local:TestParamsControl Grid.Column="0" x:Name="tpc_TestParam" ReadOnly="True" IsEnabled="{Binding ElementName=ckb_AddTestParameter, Path=IsChecked, TargetNullValue=false}"/>
+                <ListBox Grid.Column="1" x:Name="lst_TestParams" IsEnabled="{Binding ElementName=ckb_AddTestParameter, Path=IsChecked, TargetNullValue=false}" ItemsSource="{Binding Path=TestParams}" DisplayMemberPath="FriendlyName" SelectionChanged="lst_TestParams_SelectionChanged" />
+            </Grid>
+        </GroupBox>
+
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btn_Accept" Content="Add" Width="50" Click="btn_Accept_Click"/>
+            <Button x:Name="btn_Cancel" Content="Cancel" Width="50" IsCancel="True" IsDefault="True"/>
+        </StackPanel>
+
+        <StatusBar Grid.Row="3">
+            <StatusBarItem x:Name="sti_Status" HorizontalAlignment="Right"/>
+        </StatusBar>
+    </Grid>
+</Window>
